@@ -73,7 +73,7 @@ public class DbUtils {
             stmt.setString(1, username);
             stmt.setString(2, password);
             ResultSet result = stmt.executeQuery();
-            return result != null;
+            return result.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

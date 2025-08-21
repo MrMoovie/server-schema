@@ -36,6 +36,9 @@ public class GeneralController {
 
     @RequestMapping("/authenticate")
     public boolean auth(@RequestBody UserDTO userDTO){
-        return dbUtils.auth(userDTO.getUsername(), userDTO.getPassword());
+        System.out.println(userDTO.getUsername()+" "+userDTO.getPassword());
+        boolean a =dbUtils.auth(userDTO.getUsername(), userDTO.getPassword());
+        System.out.println(a);
+        return a;
     }
 }
