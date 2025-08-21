@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 @Component
@@ -19,11 +20,14 @@ public class DbUtils {
 
     @PostConstruct
     public void init () {
+//        Scanner scanner = new Scanner(System.in);
+//        String username = scanner.next();
+//        String password = scanner.next();
         createConnection("root", "102030");
     }
 
     public void createConnection (String username, String password) {
-        String url = "jdbc:mysql://localhost:3306/project";
+        String url = "jdbc:mysql://localhost:3306/ashcollege";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = java.sql.DriverManager.getConnection(url, username, password);
@@ -58,6 +62,18 @@ public class DbUtils {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean auth(String username, String password){
+        String query = "SELECT * FROM users WHERE username= ? AND password = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet result = stmt.executeQuery();
+            return result != null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

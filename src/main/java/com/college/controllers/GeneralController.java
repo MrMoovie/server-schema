@@ -2,6 +2,7 @@ package com.college.controllers;
 
 
 import com.college.entities.User;
+import com.college.entities.UserDTO;
 import com.college.responses.AvailableResponse;
 import com.college.responses.BasicResponse;
 import com.college.responses.UsersResponse;
@@ -21,6 +22,7 @@ public class GeneralController {
     @Autowired
     private DbUtils dbUtils;
 
+
     @RequestMapping ("/users")
     public List<User> getAllUsers () {
         return dbUtils.fetchAllUsers();
@@ -31,4 +33,8 @@ public class GeneralController {
         dbUtils.addUser(username, password);
     }
 
+    @RequestMapping("/authenticate")
+    public boolean auth(@RequestBody UserDTO userDTO){
+        return dbUtils.auth(userDTO.getUsername(), userDTO.getPassword());
+    }
 }
